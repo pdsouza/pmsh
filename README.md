@@ -204,7 +204,7 @@ pmsh $ quit
 
 ## Licensing
 
-PMShell is licensed under the BSD 3-Clause License, see LICENSE for all legal stuff.
+PMShell is licensed under the BSD 3-Clause License, see [LICENSE](https://github.com/pdsouza/pmsh/blob/master/LICENSE) for all the legal stuff.
 
 ## Authors
 
