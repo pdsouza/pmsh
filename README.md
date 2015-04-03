@@ -2,7 +2,7 @@
 
 PMShell is a project to open up and explore the internals of a standard job-control shell--a "blackbox" for most programmers. By starting with barebones functionality, we hope to trim the legacy fat and build a lean (and fun) shell for the 21st century.
 
-Currently, PMShell functions in almost the same way as a full featured shell. It supports redirection of standard in and standard out as well as multi-state pipelines. It allows for jobs to run either in the foreground or in the background. Job control is also supported to allow the user to move jobs between the foreground and the background.
+Currently, PMShell functions in almost the same way as a full featured shell. It supports redirection of standard in and standard out as well as multi-stage pipelines. It allows for jobs to run either in the foreground or in the background. Job control is also supported to allow the user to move jobs between the foreground and the background.
 
 ## Compilation Instructions
 
