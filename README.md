@@ -43,148 +43,150 @@ There are other files included in the submission as well. Jobs.h is a header fil
 
 ## Examples
 
-    maxmguo@spec29:~/pmsh> ./pmsh
-    pmsh $ git clone https://github.com/SuperChocomocha/Ring-Buffer.git 
-    Cloning into Ring-Buffer...
-    remote: Counting objects: 4, done.
-    remote: Compressing objects: 100% (3/3), done.
-    remote: Total 4 (delta 1), reused 4 (delta 1)
-    Unpacking objects: 100% (4/4), done.
-    pmsh $ ls
-    job_handler.c  job_handler.o  linked_list.c  linked_list.o  parser.c  parser.o  pmsh.c     Ring-Buffer  tokenizer.h  tst
-    job_handler.h  jobs.h         linked_list.h  Makefile       parser.h  pmsh  README.md  tokenizer.c  tokenizer.o
-    pmsh $ vim ./Ring-Buffer/ring_buf.h
-    pmsh $ git status                   
-    # On branch master
-    # Changes not staged for commit:
-    #   (use "git add <file>..." to update what will be committed)
-    #   (use "git checkout -- <file>..." to discard changes in working directory)
-    #
-    #   modified:   README.md
-    #
-    # Untracked files:
-    #   (use "git add <file>..." to include in what will be committed)
-    #
-    #   Ring-Buffer/
-    #   job_handler.o
-    #   linked_list.o
-    #   parser.o
-    #   pmsh
-    #   tokenizer.o
-    no changes added to commit (use "git add" and/or "git commit -a")
-    pmsh $ rm -rf Ring-Buffer
-    pmsh $ ls
-    job_handler.c  job_handler.o  linked_list.c  linked_list.o  parser.c  parser.o  pmsh.c     tokenizer.c  tokenizer.o
-    job_handler.h  jobs.h         linked_list.h  Makefile       parser.h  pmsh  README.md  tokenizer.h  tst
-    pmsh $ git add README.md
-    pmsh $ git commit -m "showing-off-pmsh"
-    [master 321dfcd] "showing-off-pmsh"
-     1 files changed, 2 insertions(+), 2 deletions(-)
-    pmsh $ git push origin master
-    Username: 
-    Password: 
-    Counting objects: 5, done.
-    Delta compression using up to 2 threads.
-    Compressing objects: 100% (3/3), done.
-    Writing objects: 100% (3/3), 366 bytes, done.
-    Total 3 (delta 2), reused 0 (delta 0)
-    To https://github.com/pdsouza/pmsh.git
-       358cd6e..321dfcd  master -> master
-    pmsh $ 
-    pmsh $ 
-    pmsh $ git status
-    # On branch master
-    # Untracked files:
-    #   (use "git add <file>..." to include in what will be committed)
-    #
-    #   job_handler.o
-    #   linked_list.o
-    #   parser.o
-    #   pmsh
-    #   tokenizer.o
-    nothing added to commit but untracked files present (use "git add" to track)
-    pmsh $ quit
+```sh
+maxmguo@spec29:~/pmsh> ./pmsh
+pmsh $ git clone https://github.com/SuperChocomocha/Ring-Buffer.git 
+Cloning into Ring-Buffer...
+remote: Counting objects: 4, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 1), reused 4 (delta 1)
+Unpacking objects: 100% (4/4), done.
+pmsh $ ls
+job_handler.c  job_handler.o  linked_list.c  linked_list.o  parser.c  parser.o  pmsh.c     Ring-Buffer  tokenizer.h  tst
+job_handler.h  jobs.h         linked_list.h  Makefile       parser.h  pmsh  README.md  tokenizer.c  tokenizer.o
+pmsh $ vim ./Ring-Buffer/ring_buf.h
+pmsh $ git status                   
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#   modified:   README.md
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#   Ring-Buffer/
+#   job_handler.o
+#   linked_list.o
+#   parser.o
+#   pmsh
+#   tokenizer.o
+no changes added to commit (use "git add" and/or "git commit -a")
+pmsh $ rm -rf Ring-Buffer
+pmsh $ ls
+job_handler.c  job_handler.o  linked_list.c  linked_list.o  parser.c  parser.o  pmsh.c     tokenizer.c  tokenizer.o
+job_handler.h  jobs.h         linked_list.h  Makefile       parser.h  pmsh  README.md  tokenizer.h  tst
+pmsh $ git add README.md
+pmsh $ git commit -m "showing-off-pmsh"
+[master 321dfcd] "showing-off-pmsh"
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+pmsh $ git push origin master
+Username: 
+Password: 
+Counting objects: 5, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 366 bytes, done.
+Total 3 (delta 2), reused 0 (delta 0)
+To https://github.com/pdsouza/pmsh.git
+   358cd6e..321dfcd  master -> master
+pmsh $ 
+pmsh $ 
+pmsh $ git status
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#   job_handler.o
+#   linked_list.o
+#   parser.o
+#   pmsh
+#   tokenizer.o
+nothing added to commit but untracked files present (use "git add" to track)
+pmsh $ quit
 
 
 
-    maxmguo@spec29:~/pmsh> ./pmsh 
-    pmsh $ sleep 5 | sleep 5 | sleep 5 &
-    Running: sleep 5 | sleep 5 | sleep 5 &
-    pmsh $ jobs
-    [1] sleep 5 | sleep 5 | sleep 5 & (Running)
-    pmsh $ sleep 500&
-    Running: sleep 500&
-    Finished: sleep 5 | sleep 5 | sleep 5 &
-    pmsh $ jobs
-    [1] sleep 500& (Running)
-    pmsh $ sleep 600
-    ^Z
-    Stopped: sleep 600
-    pmsh $ jobs
-    [1] sleep 500& (Running)
-    [2] sleep 600 (Stopped)
-    pmsh $ sleep 700&
-    Running: sleep 700&
-    pmsh $ jobs
-    [1] sleep 500& (Running)
-    [2] sleep 600 (Stopped)
-    [3] sleep 700& (Running)
-    pmsh $ fg
-    Restarting: sleep 700&
-    ^Z
-    Stopped: sleep 700&
-    pmsh $ jobs
-    [1] sleep 500& (Running)
-    [2] sleep 600 (Stopped)
-    [3] sleep 700& (Stopped)
-    pmsh $ bg
-    Running: sleep 700&
-    pmsh $ jobs
-    [1] sleep 500& (Running)
-    [2] sleep 600 (Stopped)
-    [3] sleep 700& (Running)
-    pmsh $ bg
-    Running: sleep 600
-    pmsh $ jobs
-    [1] sleep 500& (Running)
-    [2] sleep 600 (Running)
-    [3] sleep 700& (Running)
-    pmsh $ fg 1
-    Restarting: sleep 500&
-    ^Z
-    Stopped: sleep 500&
-    pmsh $ jobs
-    [1] sleep 500& (Stopped)
-    [2] sleep 600 (Running)
-    [3] sleep 700& (Running)
-    pmsh $ sleep 800 
-    ^Z
-    Stopped: sleep 800
-    pmsh $ jobs
-    [1] sleep 500& (Stopped)
-    [2] sleep 600 (Running)
-    [3] sleep 700& (Running)
-    [4] sleep 800 (Stopped)
-    pmsh $ bg 1
-    Running: sleep 500&
-    pmsh $ jobs
-    [1] sleep 500& (Running)
-    [2] sleep 600 (Running)
-    [3] sleep 700& (Running)
-    [4] sleep 800 (Stopped)
-    pmsh $ quit
+maxmguo@spec29:~/pmsh> ./pmsh 
+pmsh $ sleep 5 | sleep 5 | sleep 5 &
+Running: sleep 5 | sleep 5 | sleep 5 &
+pmsh $ jobs
+[1] sleep 5 | sleep 5 | sleep 5 & (Running)
+pmsh $ sleep 500&
+Running: sleep 500&
+Finished: sleep 5 | sleep 5 | sleep 5 &
+pmsh $ jobs
+[1] sleep 500& (Running)
+pmsh $ sleep 600
+^Z
+Stopped: sleep 600
+pmsh $ jobs
+[1] sleep 500& (Running)
+[2] sleep 600 (Stopped)
+pmsh $ sleep 700&
+Running: sleep 700&
+pmsh $ jobs
+[1] sleep 500& (Running)
+[2] sleep 600 (Stopped)
+[3] sleep 700& (Running)
+pmsh $ fg
+Restarting: sleep 700&
+^Z
+Stopped: sleep 700&
+pmsh $ jobs
+[1] sleep 500& (Running)
+[2] sleep 600 (Stopped)
+[3] sleep 700& (Stopped)
+pmsh $ bg
+Running: sleep 700&
+pmsh $ jobs
+[1] sleep 500& (Running)
+[2] sleep 600 (Stopped)
+[3] sleep 700& (Running)
+pmsh $ bg
+Running: sleep 600
+pmsh $ jobs
+[1] sleep 500& (Running)
+[2] sleep 600 (Running)
+[3] sleep 700& (Running)
+pmsh $ fg 1
+Restarting: sleep 500&
+^Z
+Stopped: sleep 500&
+pmsh $ jobs
+[1] sleep 500& (Stopped)
+[2] sleep 600 (Running)
+[3] sleep 700& (Running)
+pmsh $ sleep 800 
+^Z
+Stopped: sleep 800
+pmsh $ jobs
+[1] sleep 500& (Stopped)
+[2] sleep 600 (Running)
+[3] sleep 700& (Running)
+[4] sleep 800 (Stopped)
+pmsh $ bg 1
+Running: sleep 500&
+pmsh $ jobs
+[1] sleep 500& (Running)
+[2] sleep 600 (Running)
+[3] sleep 700& (Running)
+[4] sleep 800 (Stopped)
+pmsh $ quit
 
 
 
-    maxmguo@spec29:~/pmsh> ./pmsh 
-    pmsh $ cat < /proc/cpuinfo | head | tail | wc > test_out
-    pmsh $ cat test_out
-         10      43     210
-    pmsh $ cat < /proc/cpuinfo | head | tail | grep model > test_out2
-    pmsh $ cat test_out2
-    model      : 107
-    model name : AMD Athlon(tm) 64 X2 Dual Core Processor 5600+
-    pmsh $ quit
+maxmguo@spec29:~/pmsh> ./pmsh 
+pmsh $ cat < /proc/cpuinfo | head | tail | wc > test_out
+pmsh $ cat test_out
+     10      43     210
+pmsh $ cat < /proc/cpuinfo | head | tail | grep model > test_out2
+pmsh $ cat test_out2
+model      : 107
+model name : AMD Athlon(tm) 64 X2 Dual Core Processor 5600+
+pmsh $ quit
+```
 
 ## Caveats
 
