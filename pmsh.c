@@ -43,6 +43,7 @@ void print_jobs();
 void jwait(job *j);
 void do_fg(char **argv);
 void do_bg(char **argv);
+static void do_cd(char **argv);
 void cleanup();
 
 int main(int argc, char** argv) {
@@ -123,6 +124,10 @@ int main(int argc, char** argv) {
             continue;
         } else if (!my_strcmp(args[0], "jobs")) {
             print_bg(job_list);
+            free_job(j);
+            continue;
+        } else if (!my_strcmp(args[0], "cd")) {
+            do_cd(args);
             free_job(j);
             continue;
         }
@@ -446,6 +451,18 @@ void do_bg(char **argv) {
 
     if (bg_job != NULL)
         printf("Running: %s\n", bg_job->rawcmd);
+}
+
+static void do_cd(char **argv) {
+    int num_toks = 0;
+
+    while(argv[num_toks] != NULL) ++num_toks;
+
+    if (num_toks > 1) {
+        if (chdir(argv[1]) == -1) {
+            perror("cd");
+        }
+    }
 }
 
 void cleanup() {
