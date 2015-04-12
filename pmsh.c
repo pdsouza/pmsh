@@ -21,19 +21,22 @@
 #include "job_handler.h"
 #include "linked_list.h"
 
-#define PROMPT "pmsh $ "
+#define SHELL "(pmsh)"
+#define PROMPT "$"
 #define SUCC_MSG  "Process completed on time.\n"
 #define OFLOW_MSG "Input too long, try again.\n"
 #define UNCMD_MSG "Command not found.\n"
 #define EXIT_MSG  "quit\n"
 
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 1 << 10
 #define STRING_SIZE(s) (sizeof(s)/sizeof(char))
 
 pid_t shell_pgid;
 pid_t pid;
 LIST *job_list;
 LIST *msg_q;
+
+static char pwd[BUFFER_SIZE];
 
 void handler(int signum, siginfo_t *info, void *context);
 void set_handler();
@@ -44,6 +47,7 @@ void jwait(job *j);
 void do_fg(char **argv);
 void do_bg(char **argv);
 static void do_cd(char **argv);
+static void sync_pwd();
 void cleanup();
 
 int main(int argc, char** argv) {
@@ -58,7 +62,9 @@ int main(int argc, char** argv) {
     msg_q = init_list();
     pid_t pgid;
 
+    /* initial setup */
     shell_pgid = getpgid(0);
+    sync_pwd();
 
     /* disable (ignore) job control signals */
     signal(SIGTTOU, SIG_IGN);
@@ -82,7 +88,9 @@ int main(int argc, char** argv) {
         while(msg_q->size > 0)
             free(del(msg_q,0));
 
-        write(STDOUT_FILENO, PROMPT, STRING_SIZE(PROMPT)); 
+        /* TODO: shell print macro */
+        printf("%s %s %s ", SHELL, pwd, PROMPT);
+        fflush(stdout);
 
         do 
             cmd_size = read(STDIN_FILENO, buf, BUFFER_SIZE);
@@ -461,7 +469,18 @@ static void do_cd(char **argv) {
     if (num_toks > 1) {
         if (chdir(argv[1]) == -1) {
             perror("cd");
+            return;
         }
+
+        sync_pwd();
+    }
+}
+
+static void sync_pwd() {
+    if (getcwd(pwd, BUFFER_SIZE) == NULL) {
+        /* TODO: increase buffer size if necessary */
+        perror("getcwd");
+        exit(EXIT_FAILURE);
     }
 }
 

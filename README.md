@@ -200,8 +200,6 @@ pmsh $ quit
 
 2. Make it an executable and stick in /bin, startup as default shell so we can use it to test and iron out bugs.
 
-3. Add support for switching directories (cd command).
-
 ## Licensing
 
 PMShell is licensed under the BSD 3-Clause License, see [LICENSE](https://github.com/pdsouza/pmsh/blob/master/LICENSE) for all the legal stuff.
