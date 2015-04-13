@@ -1,8 +1,8 @@
 CFLAGS=-g -Wall
 CC=gcc
-LIBS=tokenizer.o parser.o linked_list.o job_handler.o
+LIBS=tokenizer.o parser.o linked_list.o job_handler.o history.o
 
-pmsh : pmsh.c parser.o linked_list.o tokenizer.o job_handler.o
+pmsh : pmsh.c parser.o linked_list.o tokenizer.o job_handler.o history.o
 	$(CC) $(CFLAGS) $(LIBS) -o pmsh pmsh.c
 
 parser : parser.c tokenizer.o
@@ -13,6 +13,9 @@ linked_list : linked_list.c
 
 job_handler : job_handler.c
 	$(CC) $(CFLAGS) $(LIBS) -c job_handler.c
+
+history : history.c
+	$(CC) $(CFLAGS) $(LIBS) -c history.c
 
 tokenizer : tokenizer.c
 	$(CC) $(CFLAGS) $(LIBS) -c tokenizer.c

@@ -11,6 +11,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <termios.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -20,6 +21,7 @@
 #include "jobs.h"
 #include "job_handler.h"
 #include "linked_list.h"
+#include "history.h"
 
 #define SHELL "(pmsh)"
 #define PROMPT "$"
@@ -54,7 +56,7 @@ int main(int argc, char** argv) {
     ssize_t cmd_size;
     int i;
     int pipefd[2], fin, fout;
-    char buf[BUFFER_SIZE];
+    char buf[BUFFER_SIZE], hist[BUFFER_SIZE];
     char *cmd;
     char **args;
     job *j;
@@ -65,6 +67,8 @@ int main(int argc, char** argv) {
     /* initial setup */
     shell_pgid = getpgid(0);
     sync_pwd();
+
+    // TODO: investigate termios.h for handing arrow keys
 
     /* disable (ignore) job control signals */
     signal(SIGTTOU, SIG_IGN);
@@ -115,6 +119,8 @@ int main(int argc, char** argv) {
 
         buf[cmd_size-1] = '\0'; // strip the newline
 
+        add_history(buf);
+
         j = parse(buf);
         if(j == (job *) NULL) {
             printf("Invalid redirections you moron!\n");
@@ -138,13 +144,21 @@ int main(int argc, char** argv) {
             do_cd(args);
             free_job(j);
             continue;
+        } else if (!my_strcmp(args[0], "history")) {
+            if (get_history(hist, BUFFER_SIZE, 1) == NULL) {
+                printf("***** LAST ITEM IN HISTORY = NULL\n");
+            } else {
+                printf("***** LAST ITEM IN HISTORY = %s\n", hist);
+            }
+            free_job(j);
+            continue;
         }
 
         j->job_id = gen_job_id(job_list);
         j->running = 1;
         j->complete = 0;
         push(job_list, JOB, (void *)j);
-    
+
         pgid = 0; // set the job pgid to be the first child's pid
 
         fin = STDIN_FILENO;
